@@ -1,4 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://admin:CohibaRedMongo*11@cluster0.ykkzj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "mongoURI": "mongodb+srv://admin:CohibaRedMongo*11@cluster0.ykkzj.mongodb.net/dndBeyondClone?retryWrites=true&w=majority",
   "jwtSecret": "secret"
 }

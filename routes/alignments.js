@@ -1,12 +1,12 @@
 const express = require('express')
-const router = express.Router()
+const alignmentsRouter = express.Router()
 
 const Alignments = require('../models/Alignments')
 
-// @route   GET api/spells
-// @desc    Get list of all spells
+// @route   GET api/alignments
+// @desc    Get list of all alignments
 // @access  Public
-router.get('/', async (req, res) => {
+alignmentsRouter.route('/').get(async (req, res) => {
   try {
     const count = await Alignments.countDocuments()
     const results = await Alignments.find(
@@ -20,4 +20,20 @@ router.get('/', async (req, res) => {
   }
 })
 
-module.exports = router
+// @route   GET api/alignments/:index
+// @desc    Get details of requested alignment
+// @access  Public
+alignmentsRouter.route('/:index').get(async (req, res) => {
+  try {
+    const results = await Alignments.findOne(
+      { index: req.params.index },
+      { _id: 0 }
+    ).sort({ index: 1 })
+    res.json(results)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+module.exports = alignmentsRouter

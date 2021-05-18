@@ -1,12 +1,12 @@
 const express = require('express')
-const router = express.Router()
+const ruleSectionsRouter = express.Router()
 
 const RuleSections = require('../models/RuleSections')
 
-// @route   GET api/spells
-// @desc    Get list of all spells
+// @route   GET api/rule-sections
+// @desc    Get list of all rule sections
 // @access  Public
-router.get('/', async (req, res) => {
+ruleSectionsRouter.route('/').get(async (req, res) => {
   try {
     const count = await RuleSections.countDocuments()
     const results = await RuleSections.find(
@@ -20,4 +20,20 @@ router.get('/', async (req, res) => {
   }
 })
 
-module.exports = router
+// @route   GET api/rule-sections/:index
+// @desc    Get details of requested rule section
+// @access  Public
+ruleSectionsRouter.route('/:index').get(async (req, res) => {
+  try {
+    const results = await RuleSections.findOne(
+      { index: req.params.index },
+      { _id: 0 }
+    ).sort({ index: 1 })
+    res.json(results)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+module.exports = ruleSectionsRouter

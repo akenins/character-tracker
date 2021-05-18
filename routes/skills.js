@@ -1,12 +1,12 @@
 const express = require('express')
-const router = express.Router()
+const skillsRouter = express.Router()
 
 const Skills = require('../models/Skills')
 
-// @route   GET api/spells
-// @desc    Get list of all spells
+// @route   GET api/skills
+// @desc    Get list of all skills
 // @access  Public
-router.get('/', async (req, res) => {
+skillsRouter.route('/').get(async (req, res) => {
   try {
     const count = await Skills.countDocuments()
     const results = await Skills.find(
@@ -20,4 +20,20 @@ router.get('/', async (req, res) => {
   }
 })
 
-module.exports = router
+// @route   GET api/skills/:index
+// @desc    Get details of requested skill
+// @access  Public
+skillsRouter.route('/:index').get(async (req, res) => {
+  try {
+    const results = await Skills.findOne(
+      { index: req.params.index },
+      { _id: 0 }
+    ).sort({ index: 1 })
+    res.json(results)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+module.exports = skillsRouter

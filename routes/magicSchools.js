@@ -1,12 +1,12 @@
 const express = require('express')
-const router = express.Router()
+const magicSchoolsRouter = express.Router()
 
 const MagicSchools = require('../models/MagicSchools')
 
-// @route   GET api/spells
-// @desc    Get list of all spells
+// @route   GET api/magic-schools
+// @desc    Get list of all magic schools
 // @access  Public
-router.get('/', async (req, res) => {
+magicSchoolsRouter.route('/').get(async (req, res) => {
   try {
     const count = await MagicSchools.countDocuments()
     const results = await MagicSchools.find(
@@ -20,4 +20,20 @@ router.get('/', async (req, res) => {
   }
 })
 
-module.exports = router
+// @route   GET api/magic-schools/:index
+// @desc    Get details of requested magic school
+// @access  Public
+magicSchoolsRouter.route('/:index').get(async (req, res) => {
+  try {
+    const results = await MagicSchools.findOne(
+      { index: req.params.index },
+      { _id: 0 }
+    ).sort({ index: 1 })
+    res.json(results)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+module.exports = magicSchoolsRouter

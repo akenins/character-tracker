@@ -1,12 +1,12 @@
 const express = require('express')
-const router = express.Router()
+const conditionsRouter = express.Router()
 
 const Conditions = require('../models/Conditions')
 
-// @route   GET api/spells
-// @desc    Get list of all spells
+// @route   GET api/conditions
+// @desc    Get list of all conditions
 // @access  Public
-router.get('/', async (req, res) => {
+conditionsRouter.route('/').get(async (req, res) => {
   try {
     const count = await Conditions.countDocuments()
     const results = await Conditions.find(
@@ -20,4 +20,20 @@ router.get('/', async (req, res) => {
   }
 })
 
-module.exports = router
+// @route   GET api/conditions/:index
+// @desc    Get details of requested condition
+// @access  Public
+conditionsRouter.route('/:index').get(async (req, res) => {
+  try {
+    const results = await Conditions.findOne(
+      { index: req.params.index },
+      { _id: 0 }
+    ).sort({ index: 1 })
+    res.json(results)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+module.exports = conditionsRouter

@@ -13,7 +13,6 @@ app.get('/', (req, res) =>
   res.json({ msg: 'Welcome to the D&D Character Builder API' })
 )
 
-// Define routes
 app.use('/api/users', require('./routes/users'))
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/characters', require('./routes/characters'))
@@ -33,6 +32,7 @@ app.use('/api/rules', require('./routes/rules'))
 app.use('/api/skills', require('./routes/skills'))
 app.use('/api/spells', require('./routes/spells'))
 app.use('/api/starting-equipment', require('./routes/startingEquipment'))
+app.use('/api/subclasses', require('./routes/subclasses'))
 app.use('/api/traits', require('./routes/traits'))
 app.use('/api/weapon-properties', require('./routes/weaponProperties'))
 

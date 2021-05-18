@@ -1,12 +1,12 @@
 const express = require('express')
-const router = express.Router()
+const classRouter = express.Router()
 
 const Classes = require('../models/Classes')
 
-// @route   GET api/spells
-// @desc    Get list of all spells
+// @route   GET api/classes
+// @desc    Get list of all classes
 // @access  Public
-router.get('/', async (req, res) => {
+classRouter.route('/').get(async (req, res) => {
   try {
     const count = await Classes.countDocuments()
     const results = await Classes.find(
@@ -20,4 +20,20 @@ router.get('/', async (req, res) => {
   }
 })
 
-module.exports = router
+// @route   GET api/classes/:index
+// @desc    Get details of requested class
+// @access  Public
+classRouter.route('/:index').get(async (req, res) => {
+  try {
+    const results = await Classes.findOne(
+      { index: req.params.index },
+      { _id: 0 }
+    ).sort({ index: 1 })
+    res.json(results)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+module.exports = classRouter

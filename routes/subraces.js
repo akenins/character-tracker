@@ -3,8 +3,8 @@ const router = express.Router()
 
 const Subraces = require('../models/Subraces')
 
-// @route   GET api/spells
-// @desc    Get list of all spells
+// @route   GET api/subraces
+// @desc    Get list of all subraces
 // @access  Public
 router.get('/', async (req, res) => {
   try {

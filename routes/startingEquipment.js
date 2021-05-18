@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     const count = await StartingEquipment.countDocuments()
     const results = await StartingEquipment.find(
       {},
-      { _id: 0, index: 1, class: 1, url: 1 }
+      { _id: 0, index: 1, 'class.name': 1, url: 1 }
     ).sort({ index: 1 })
     res.json({ count, results })
   } catch (err) {
